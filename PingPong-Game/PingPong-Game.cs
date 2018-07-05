@@ -13,11 +13,12 @@ namespace PingPong_Game
 {
     public partial class PingPong : Form
     {
-        bool starter;
+        Thread ballThread;
+
         public PingPong()
         {
             InitializeComponent();
-            starter = false;
+            ballThread = new Thread(new ThreadStart(ballMoving));
         }
 
         private void PingPong_KeyDown(object sender, KeyEventArgs e)
@@ -40,15 +41,7 @@ namespace PingPong_Game
                     rightMoveUp();
                     break;
                 case Keys.Space:
-                    if (starter == true)
-                    {
-                        starter = false;
-                    }
-                    else
-                    {
-                        starter = true;
-                    }
-                    ballMoving(starter);
+                    ballThread.Start();
                     break;
             }
         }
@@ -85,16 +78,31 @@ namespace PingPong_Game
             }
         }
 
-        private void ballMoving(bool whileBool)
+        private void ballMoving()
         {
-            string mdl = movingDownLeft(true);
-            if (mdl == "movingUpRight")
+
+            string mdr = "";
+            string mdl = "";
+            string mur = "";
+            string mul = "";
+
+            while (true)
             {
+                if (mdl.Equals(null) || mdl.Equals("") || mdr.Equals("movingDownLeft") || mul.Equals("movingDownLeft"))
+                {
+                    mdl = movingDownLeft(true);
+                    mul = movingUpLeft(false);
+                }
 
-            }
+                if (mdl.Equals("movingUpLeft") || mur.Equals("movingUpLeft"))
+                {
+                    mdl = movingDownLeft(false);
+                    mul = movingUpLeft(true);
+                }
+            } 
         }
-
-        private string movingDownRight(bool startWhile)
+        
+        private string movingDownLeft(bool startWhile)
         {
             string result = "";
             while(startWhile)
@@ -102,12 +110,12 @@ namespace PingPong_Game
                 this.pictureBox3.Location = new Point((this.pictureBox3.Location.X - 5), (this.pictureBox3.Location.Y + 5));
                 if (this.pictureBox3.Location.X <= 0)
                 {
-                    result = "movingDownLeft";
+                    result = "movingDownRight";
                     startWhile = false;
                 }
                 if (this.pictureBox3.Location.Y + this.pictureBox3.Height >= this.Height)
                 {
-                    result = "movingUpRight";
+                    result = "movingUpLeft";
                     startWhile = false;
                 }
                 Thread.Sleep(50);
@@ -120,16 +128,16 @@ namespace PingPong_Game
             string result = "";
             while (startWhile)
             {
-                this.pictureBox3.Location = new Point((this.pictureBox3.Location.X - 5), (this.pictureBox3.Location.Y + 5));
+                this.pictureBox3.Location = new Point((this.pictureBox3.Location.X - 5), (this.pictureBox3.Location.Y - 5));
                 if (this.pictureBox3.Location.X <= 0)
                 {
-                    result = "movingDownRight";
-                    break;
+                    result = "movingUpRight";
+                    startWhile = false;
                 }
-                if (this.pictureBox3.Location.Y + this.pictureBox3.Height >= this.Height)
+                if (this.pictureBox3.Location.Y <= 0)
                 {
-                    result = "movingUpLeft";
-                    break;
+                    result = "movingDownLeft";
+                    startWhile = false;
                 }
                 Thread.Sleep(50);
             }
