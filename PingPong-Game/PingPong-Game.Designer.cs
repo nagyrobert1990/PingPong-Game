@@ -109,6 +109,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "PingPong";
             this.Text = "PingPong-Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PingPong_KeyDown);

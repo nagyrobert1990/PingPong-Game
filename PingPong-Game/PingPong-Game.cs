@@ -13,9 +13,11 @@ namespace PingPong_Game
 {
     public partial class PingPong : Form
     {
+        bool starter;
         public PingPong()
         {
             InitializeComponent();
+            starter = false;
         }
 
         private void PingPong_KeyDown(object sender, KeyEventArgs e)
@@ -36,6 +38,17 @@ namespace PingPong_Game
                     break;
                 case Keys.Up:
                     rightMoveUp();
+                    break;
+                case Keys.Space:
+                    if (starter == true)
+                    {
+                        starter = false;
+                    }
+                    else
+                    {
+                        starter = true;
+                    }
+                    ballMoving(starter);
                     break;
             }
         }
@@ -72,9 +85,55 @@ namespace PingPong_Game
             }
         }
 
-        private void ballMoving()
+        private void ballMoving(bool whileBool)
         {
-            
+            string mdl = movingDownLeft(true);
+            if (mdl == "movingUpRight")
+            {
+
+            }
+        }
+
+        private string movingDownRight(bool startWhile)
+        {
+            string result = "";
+            while(startWhile)
+            {
+                this.pictureBox3.Location = new Point((this.pictureBox3.Location.X - 5), (this.pictureBox3.Location.Y + 5));
+                if (this.pictureBox3.Location.X <= 0)
+                {
+                    result = "movingDownLeft";
+                    startWhile = false;
+                }
+                if (this.pictureBox3.Location.Y + this.pictureBox3.Height >= this.Height)
+                {
+                    result = "movingUpRight";
+                    startWhile = false;
+                }
+                Thread.Sleep(50);
+            }
+            return result;
+        }
+
+        private string movingUpLeft(bool startWhile)
+        {
+            string result = "";
+            while (startWhile)
+            {
+                this.pictureBox3.Location = new Point((this.pictureBox3.Location.X - 5), (this.pictureBox3.Location.Y + 5));
+                if (this.pictureBox3.Location.X <= 0)
+                {
+                    result = "movingDownRight";
+                    break;
+                }
+                if (this.pictureBox3.Location.Y + this.pictureBox3.Height >= this.Height)
+                {
+                    result = "movingUpLeft";
+                    break;
+                }
+                Thread.Sleep(50);
+            }
+            return result;
         }
     }
 }
