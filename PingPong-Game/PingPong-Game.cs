@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace PingPong_Game
 {
-    public partial class Form1 : Form
+    public partial class PingPong : Form
     {
-        public Form1()
+        public PingPong()
         {
             InitializeComponent();
+        }
+
+        private void PingPong_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

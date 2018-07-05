@@ -1,6 +1,6 @@
 ﻿namespace PingPong_Game
 {
-    partial class Form1
+    partial class PingPong
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // PingPong
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.Name = "PingPong";
+            this.Text = "PingPong-Game";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PingPong_KeyDown);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
